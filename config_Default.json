@@ -1,0 +1,9 @@
+{
+    "deviceId": "nodeTest",
+    "traccarUrl": "https://nextcloud.TLD/index.php/apps/phonetrack/log/traccar/<key>",
+    "distanceThreshold": "5",
+    "timeThreshold": "10000",
+    "speedThreshold": "1",
+    "batchSize": 50,
+    "postRetryInterval": 5000
+}

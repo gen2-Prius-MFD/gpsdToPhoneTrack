@@ -1,0 +1,108 @@
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f6f8fa;
+        padding: 40px
+    }
+    h2 {
+        text-align: center;
+        color: #333
+    }
+    form {
+        max-width: 400px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .1)
+    }
+    label {
+        display: block;
+        margin-top: 15px;
+        font-weight: 700;
+        color: #555
+    }
+    input[type=number], input[type=text], input[type=url] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px
+    }
+    input[type=submit] {
+        margin-top: 25px;
+        background: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px
+    }
+    input[type=submit]:hover {
+        background: #0056b3
+    }
+</style>
+
+<h2>Tracking Configuration</h2>
+
+<form id="traccarForm">
+    <label for="deviceId">Device ID:</label>
+    <input id="deviceId" name="deviceId"placeholder="e.g. 123456789" required>
+        
+    <label for="traccarUrl">Traccar URL:</label>
+    <input id="traccarUrl" name="traccarUrl" placeholder="e.g. https://example.com/traccar" type="url" required>
+        
+    <label for="distanceThreshold">Distance Threshold (meters):</label>
+    <input id="distanceThreshold" name="distanceThreshold" placeholder="e.g. 100" type="number" min="0">
+
+    <label for="timeThreshold">Time Threshold (seconds):</label>    
+    <input id="timeThreshold" name="timeThreshold" placeholder="e.g. 60" type="number" min="0">
+
+    <label for="speedThreshold">Speed Threshold (km/h):</label>
+    <input id="speedThreshold" name="speedThreshold" placeholder="e.g. 10" type="number" min="0">
+
+    <label for="batchSize">Post Batch Size:</label>
+    <input id="batchSize" name="batchSize" placeholder="e.g. 10" type="number" min="0">
+
+    <label for="postRetryInterval">Post Retry Interval (miliseconds):</label>
+    <input id="postRetryInterval" name="postRetryInterval" placeholder="e.g. 10" type="number" min="0">
+    
+    <input type="submit" value="Save Settings">
+</form>
+<script>
+    document.getElementById("traccarForm").addEventListener("submit", (async e => {
+        e.preventDefault();
+        const t = await fetch("/save", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                deviceId: this.deviceId.value,
+                traccarUrl: this.traccarUrl.value,
+                distanceThreshold: this.distanceThreshold.value,
+                timeThreshold: this.timeThreshold.value,
+                speedThreshold: this.speedThreshold.value,
+                batchSize: this.batchSize.value,
+                postRetryInterval: this.postRetryInterval.value
+            })
+        });
+        alert(t.ok ? "Settings saved successfully!" : "Failed to save settings.")
+    }))
+    document.addEventListener("DOMContentLoaded", (async () => {
+        const e = await fetch("/load");
+        if (!e.ok) return;
+
+        const t = await e.json();
+        document.getElementById("deviceId").value = t.deviceId || ""
+        document.getElementById("traccarUrl").value = t.traccarUrl || ""
+        document.getElementById("distanceThreshold").value = t.distanceThreshold || ""
+        document.getElementById("timeThreshold").value = t.timeThreshold || ""
+        document.getElementById("speedThreshold").value = t.speedThreshold || ""
+        document.getElementById("batchSize").value = t.batchSize || ""
+        document.getElementById("postRetryInterval").value = t.postRetryInterval || ""
+    }))
+</script>
