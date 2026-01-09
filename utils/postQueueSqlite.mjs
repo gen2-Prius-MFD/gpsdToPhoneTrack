@@ -33,7 +33,7 @@ export default class SQLiteQueue {
 
   enqueue(data) {
     const uuid = randomUUID()
-    const stmt = this.db.prepare(`INSERT INTO gps_queue (id, timestamp, lat, lon, speed, altitude, accuracy) VALUES (?, ?, ?, ?, ?, ?)`)
+    const stmt = this.db.prepare(`INSERT INTO gps_queue (id, timestamp, lat, lon, speed, altitude, accuracy) VALUES (?, ?, ?, ?, ?, ?, ?)`)
     stmt.run(
       uuid,
       data.timestamp,
@@ -65,9 +65,9 @@ export default class SQLiteQueue {
       const res = await fetch(`${this.apiUrl}?id=${this.deviceId}&lat=${row.lat}&lon=${row.lon}&altitude=${row.altitude}&speed=${row.speed}&timestamp=${encodeURIComponent(row.timestamp)}&accuracy=${row.accuracy}`, {
         method: 'POST',
         timeout: 5000
-      })
+      }).catch(()=>{})
 
-      if (res.ok) return row.id
+      if (res?.ok) return row.id
     }))).filter(a=>typeof a !== 'undefined')
 
     this._markSent(postedRows)
