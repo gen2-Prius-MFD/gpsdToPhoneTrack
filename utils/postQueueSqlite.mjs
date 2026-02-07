@@ -9,8 +9,8 @@ export default class SQLiteQueue {
 
     this.apiUrl = config.traccarUrl
     this.deviceId = config.deviceId
-    this.batchSize = config.batchSize
-    this.retryInterval = config.postRetryInterval
+    this.batchSize = Number(config.batchSize)
+    this.retryInterval = Number(config.postRetryInterval)
 
     this.db.pragma('journal_mode = WAL')
     this.db.pragma('synchronous = FULL')

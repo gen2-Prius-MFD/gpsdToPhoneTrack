@@ -5,9 +5,9 @@ import Queue from './utils/postQueueSqlite.mjs'
 const configFromArgs = Object.fromEntries(process.argv.slice(2).filter((_, index) => index % 2 === 0).map((key, index) => [key.replace(/^--/, ''), process.argv.slice(2)[index * 2 + 1]]))
 
 const tracker = new detectMovement({
-  distanceThreshold: configFromArgs.distanceThreshold,
-  timeThreshold: configFromArgs.timeThreshold,
-  speedThreshold: configFromArgs.speedThreshold
+  distanceThreshold: Number(configFromArgs.distanceThreshold),
+  timeThreshold: Number(configFromArgs.timeThreshold),
+  speedThreshold: Number(configFromArgs.speedThreshold)
 });
 const client = new Gpsd({
   port: 2947,
