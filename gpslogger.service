@@ -1,0 +1,14 @@
+[Unit]
+Description=GPS logger
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/node /home/user/Downloads/gpsdToPhoneTrack/index.mjs
+WorkingDirectory=/home/user/Downloads/gpsdToPhoneTrack
+Restart=on-failure
+RestartSec=2
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=default.target
