@@ -13,7 +13,7 @@ export default class extends EventEmitter {
   }
 
   update(data) {
-    if (data.mode === 1) return;
+    if (data.mode === 1 || data.mode === 0) return;
     
     const currentDate = data.time ? new Date(data.time) : new Date();
     const currentTime = currentDate.getTime();
