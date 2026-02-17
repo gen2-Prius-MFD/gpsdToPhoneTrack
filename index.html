@@ -69,6 +69,9 @@
 
     <label for="postRetryInterval">Post Retry Interval (miliseconds):</label>
     <input id="postRetryInterval" name="postRetryInterval" placeholder="e.g. 10" type="number" min="0">
+
+    <label for="accuracyThreshold">Accaccuracy Threshold (meters):</label>
+    <input id="accuracyThreshold" name="accuracyThreshold" placeholder="e.g. 10" type="number" min="0">
     
     <input type="submit" value="Save Settings">
 </form>
@@ -87,7 +90,8 @@
                 timeThreshold: this.timeThreshold.value,
                 speedThreshold: this.speedThreshold.value,
                 batchSize: this.batchSize.value,
-                postRetryInterval: this.postRetryInterval.value
+                postRetryInterval: this.postRetryInterval.value,
+                accuracyThreshold: this.accuracyThreshold.value
             })
         });
         alert(t.ok ? "Settings saved successfully!" : "Failed to save settings.")
@@ -99,10 +103,11 @@
         const t = await e.json();
         document.getElementById("deviceId").value = t.deviceId || ""
         document.getElementById("traccarUrl").value = t.traccarUrl || ""
-        document.getElementById("distanceThreshold").value = t.distanceThreshold || ""
-        document.getElementById("timeThreshold").value = t.timeThreshold || ""
-        document.getElementById("speedThreshold").value = t.speedThreshold || ""
-        document.getElementById("batchSize").value = t.batchSize || ""
-        document.getElementById("postRetryInterval").value = t.postRetryInterval || ""
+        document.getElementById("distanceThreshold").value = t.distanceThreshold || 0
+        document.getElementById("timeThreshold").value = t.timeThreshold || 0
+        document.getElementById("speedThreshold").value = t.speedThreshold || 0
+        document.getElementById("batchSize").value = t.batchSize || 0
+        document.getElementById("postRetryInterval").value = t.postRetryInterval || 0
+        document.getElementById("accuracyThreshold").value = t.accuracyThreshold || 0
     }))
 </script>

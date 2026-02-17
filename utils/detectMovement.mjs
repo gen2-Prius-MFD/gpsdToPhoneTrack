@@ -1,11 +1,12 @@
 import { EventEmitter } from 'events';
 
 export default class extends EventEmitter {
-  constructor({distanceThreshold, timeThreshold, speedThreshold} = {}) {
+  constructor({distanceThreshold, timeThreshold, speedThreshold, accuracyThreshold} = {}) {
     super();
     this.distanceThreshold = distanceThreshold // meters;
     this.timeThreshold = timeThreshold; // milliseconds
     this.speedThreshold = speedThreshold; // meters/second (ignore slower movement)
+    this.accuracyThreshold = accuracyThreshold
 
     this.lastPoint = null;
     this.lastTriggerTime = 0;
@@ -26,7 +27,7 @@ export default class extends EventEmitter {
       const elapsed = (currentTime - this.lastMoveTime) / 1000; // seconds
       const speed = distance / (elapsed || 1); // m/s
 
-      if (distance > this.distanceThreshold || deltaTime > this.timeThreshold || speed > this.speedThreshold) {
+      if ((distance > this.distanceThreshold || deltaTime > this.timeThreshold || speed > this.speedThreshold) && data.eph >= this.accuracyThreshold) {
         this.emit('move', {
           distance,
           deltaTime,

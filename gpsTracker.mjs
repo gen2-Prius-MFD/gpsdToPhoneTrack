@@ -7,7 +7,8 @@ const configFromArgs = Object.fromEntries(process.argv.slice(2).filter((_, index
 const tracker = new detectMovement({
   distanceThreshold: Number(configFromArgs.distanceThreshold),
   timeThreshold: Number(configFromArgs.timeThreshold),
-  speedThreshold: Number(configFromArgs.speedThreshold)
+  speedThreshold: Number(configFromArgs.speedThreshold),
+  accuracyThreshold: Number(configFromArgs.accuracyThreshold)
 });
 const client = new Gpsd({
   port: 2947,
