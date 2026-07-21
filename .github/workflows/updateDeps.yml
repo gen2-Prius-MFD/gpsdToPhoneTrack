@@ -32,6 +32,6 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           assignees: numselli
-          title: 'build(deps): Upgrade bot NPM packages (automated)'
+          title: 'build(deps): Upgrade NPM packages (automated)'
           branch: 'build-deps-upgrade-npm-packages-automated'
           commit-message: 'build(deps): upgrade NPM packages (automated)'
