@@ -26,7 +26,6 @@ jobs:
         
       - name: Upgrade packages 🔀
         run: |
-          cd /
           ncu -u
 
       - name: Commit and create PR 🔀
